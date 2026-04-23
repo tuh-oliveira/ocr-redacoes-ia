@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>OCR de Redações</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <h1>📝 OCR de Redações</h1>
+    <p>Envie uma imagem e compare diferentes métodos de reconhecimento de texto</p>
+
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="file" required><br>
+
+        <!-- API KEY -->
+        <input type="text" name="api_key"
+            placeholder="🔐 Sua API Key da Groq (opcional)"
+            style="width: 80%; padding: 10px; border-radius: 6px; border: 1px solid #4caf50; background:#1b2f23; color:white;"><br>
+
+        <p style="font-size: 12px; color: #aaa;">
+            Se não informar uma API key, o sistema usará uma chave padrão.
+        </p>
+
+        <!-- MÉTODOS -->
+        <div class="metodos">
+            <p><strong>Escolha os métodos de OCR:</strong></p>
+
+            <label class="checkbox-card">
+                <input type="checkbox" name="metodos" value="tesseract" checked>
+                <span class="checkmark"></span>
+                <div class="content">
+                    <strong>🔎 Tesseract</strong>
+                    <small>Melhor para textos digitados</small>
+                </div>
+            </label>
+
+            <label class="checkbox-card">
+                <input type="checkbox" name="metodos" value="easyocr" checked>
+                <span class="checkmark"></span>
+                <div class="content">
+                    <strong>🧠 EasyOCR</strong>
+                    <small>Funciona com manuscritos simples</small>
+                </div>
+            </label>
+
+            <label class="checkbox-card">
+                <input type="checkbox" name="metodos" value="groq">
+                <span class="checkmark"></span>
+                <div class="content">
+                    <strong>🚀 Groq VLM</strong>
+                    <small>IA multimodal (melhor resultado geral)</small>
+                </div>
+            </label>
+        </div>
+
+        <button type="submit">🚀 Processar</button>
+    </form>
+
+    {% if easy or tess or groq %}
+    <div class="resultado">
+
+        {% if easy %}
+        <div class="bloco">
+            <h2>🧠 EasyOCR</h2>
+            {% for linha in easy %}
+                <p>{{ linha }}</p>
+            {% endfor %}
+        </div>
+        <hr>
+        {% endif %}
+
+        {% if tess %}
+        <div class="bloco">
+            <h2>🔎 Tesseract</h2>
+            {% for linha in tess %}
+                <p>{{ linha }}</p>
+            {% endfor %}
+        </div>
+        <hr>
+        {% endif %}
+
+        {% if groq %}
+        <div class="bloco destaque">
+            <h2>🚀 Groq VLM (IA)</h2>
+            {% for linha in groq %}
+                <p>{{ linha }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+    </div>
+    {% endif %}
+</div>
+
+<!-- INFO -->
+<div class="container info">
+    <h2>📊 Sobre o Sistema</h2>
+
+    <div class="card">
+        <h3>🧠 Abordagens Utilizadas</h3>
+        <p>
+            O sistema permite a seleção dinâmica entre diferentes métodos de OCR,
+            possibilitando comparações diretas entre abordagens tradicionais e baseadas em IA.
+        </p>
+    </div>
+
+    <div class="card">
+        <h3>🔎 Diferenças</h3>
+        <p>
+            Tesseract é eficiente para textos digitados, EasyOCR apresenta melhor desempenho em manuscritos simples,
+            enquanto o Groq utiliza IA multimodal para interpretação contextual.
+        </p>
+    </div>
+
+    <div class="card">
+        <h3>⚠️ Limitações</h3>
+        <p>
+            O reconhecimento de manuscritos ainda apresenta desafios e pode variar conforme a qualidade da imagem.
+        </p>
+    </div>
+
+    <div class="card">
+        <h3>🔐 Segurança</h3>
+        <p>
+            A API key informada não é armazenada e é utilizada apenas durante a requisição.
+        </p>
+    </div>
+</div>
+
+</body>
+</html>
