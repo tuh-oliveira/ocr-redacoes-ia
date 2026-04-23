@@ -1,6 +1,3 @@
-# Environment variables
-.env
-
 # Google credentials
 credencial.json
 
