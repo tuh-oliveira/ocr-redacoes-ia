@@ -39,7 +39,7 @@ class GroqVLMOCR:
                             {
                                 "role": "user",
                                 "content": [
-                                    {"type": "input_text", "text": "Extract all text from this image."},
+                                    {"type": "input_text", "text": "Just extract all the text from the image, and give me the extracted text only as a reply."},
                                     {
                                         "type": "input_image",
                                         "image_url": f"data:image/png;base64,{image_base64}"
