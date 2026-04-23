@@ -89,11 +89,19 @@ C:\Program Files\Tesseract-OCR\tesseract.exe
 
 ### 5. Configure a API da Groq
 
-Crie um arquivo `.env` na raiz do projeto:
+Copie o arquivo `.env.example` para `.env` e preencha com suas chaves de API:
+
+```bash
+cp .env.example .env
+```
+
+Edite o arquivo `.env` com suas credenciais:
 
 ```env
-GROQ_API_KEY=sua_chave_aqui
+GROQ_API_KEY=sua_chave_groq_aqui
 ```
+
+Obtenha sua chave da API Groq em: https://console.groq.com/
 
 ---
 
