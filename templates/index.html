@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>OCR de Redações</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <div class="flash-container">
+            {% for category, message in messages %}
+                <div class="flash {{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endwith %}
+
+<div class="container">
+    <h1>📝 OCR de Redações</h1>
+    <p>Envie uma imagem e compare diferentes métodos de reconhecimento de texto</p>
+
+    <!-- 🔹 FORM 1: PROCESSAR OCR -->
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="file" required><br>
+
+        <input type="text" name="api_key"
+            placeholder="🔐 Sua API Key da Groq (opcional)"
+            class="input-api"><br>
+
+        <p class="hint">
+            Se não informar uma API key, o sistema usará uma chave padrão.
+        </p>
+
+        <div class="metodos">
+            <p><strong>Escolha os métodos de OCR:</strong></p>
+
+            <label class="checkbox-card">
+                <input type="checkbox" name="metodos" value="tesseract" checked>
+                <span class="checkmark"></span>
+                <div class="content">
+                    <strong>🔎 Tesseract</strong>
+                    <small>Melhor para textos digitados</small>
+                </div>
+            </label>
+
+            <label class="checkbox-card">
+                <input type="checkbox" name="metodos" value="easyocr" checked>
+                <span class="checkmark"></span>
+                <div class="content">
+                    <strong>🧠 EasyOCR</strong>
+                    <small>Funciona com manuscritos simples</small>
+                </div>
+            </label>
+
+            <label class="checkbox-card">
+                <input type="checkbox" name="metodos" value="groq">
+                <span class="checkmark"></span>
+                <div class="content">
+                    <strong>🚀 Groq VLM</strong>
+                    <small>IA multimodal (melhor resultado geral)</small>
+                </div>
+            </label>
+        </div>
+
+        <button type="submit" class="btn-primary">🚀 Processar</button>
+    </form>
+
+    {% if easy or tess or groq %}
+    <div class="resultado">
+
+        {% if easy %}
+        <div class="bloco">
+            <h2>🧠 EasyOCR</h2>
+            {% for linha in easy %}
+                <p>{{ linha }}</p>
+            {% endfor %}
+        </div>
+        <hr>
+        {% endif %}
+
+        {% if tess %}
+        <div class="bloco">
+            <h2>🔎 Tesseract</h2>
+            {% for linha in tess %}
+                <p>{{ linha }}</p>
+            {% endfor %}
+        </div>
+        <hr>
+        {% endif %}
+
+        {% if groq %}
+        <div class="bloco destaque">
+            <h2>🚀 Groq VLM (IA)</h2>
+            {% for linha in groq %}
+                <p>{{ linha }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+    </div>
+
+    <!-- 🔥 FORM 2: EDITOR (separado!) -->
+    <div class="editor-container">
+
+        <button onclick="toggleEditor()" class="btn-secondary">
+            ✏️ Abrir Editor
+        </button>
+
+        <form method="POST">
+            <div id="editor-box" class="editor-box">
+
+                <div class="editor-header">
+                    <span>Editor de Texto</span>
+                </div>
+
+                <textarea name="texto_editado">
+{{ (groq or tess or easy) | join('\n') }}
+                </textarea>
+
+                <button type="submit" name="salvar_texto" value="1" class="btn-success">
+                    💾 Salvar Correção
+                </button>
+                
+                <input type="hidden" name="nome_arquivo" value="redacao">
+
+            </div>
+        </form>
+
+    </div>
+    {% endif %}
+
+</div>
+
+<!-- LOADING -->
+<div id="loading-overlay">
+    <div class="loading-box">
+
+        <h2>🚀 Processando OCR...</h2>
+
+        <p>
+            Dependendo da imagem e dos métodos selecionados,
+            isso pode levar alguns segundos.
+        </p>
+
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+function toggleEditor() {
+    const box = document.getElementById("editor-box");
+    box.classList.toggle("active");
+}
+const form = document.querySelector("form");
+    const loading = document.getElementById("loading-overlay");
+
+    form.addEventListener("submit", () => {
+        loading.style.display = "flex";
+    });
+</script>
+
+</body>
+</html>

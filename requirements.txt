@@ -1,0 +1,23 @@
+Flask==3.0.3
+
+# OCR tradicional
+pytesseract==0.3.10
+easyocr==1.7.1
+
+# IA (Groq via OpenAI compatível)
+openai>=2.0.0
+
+# variáveis de ambiente
+python-dotenv==1.0.1
+
+# processamento de imagem
+opencv-python==4.10.0.84
+numpy==1.26.4
+Pillow==10.4.0
+
+# dependências do EasyOCR
+torch
+torchvision
+
+# opcional
+scikit-image
