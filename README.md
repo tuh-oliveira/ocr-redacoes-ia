@@ -1,71 +1,101 @@
-# 📝 OCR de Redações com IA
+# 🧠 OCR de Redações com IA Multimodal
 
-Sistema desenvolvido para extração e processamento de textos a partir de imagens de redações, utilizando técnicas de OCR tradicional e Inteligência Artificial.
+Sistema híbrido de OCR desenvolvido para reconhecimento e processamento de redações digitadas e manuscritas utilizando OCR tradicional e Inteligência Artificial multimodal.
 
-Projeto acadêmico desenvolvido no **IFSP – Câmpus Jacareí**, no curso de Análise e Desenvolvimento de Sistemas.
-
----
-
-## 🚀 Funcionalidades
-
-* 📷 Upload de imagens
-* 🔍 Extração de texto com:
-
-  * Tesseract OCR
-  * EasyOCR
-* 🤖 Extração com IA multimodal (Groq)
-* 📊 Comparação entre diferentes métodos
-* 🧠 Organização automática do texto em linhas
-* 📈 Avaliação de similaridade entre resultados
+O projeto foi desenvolvido como pesquisa acadêmica no curso de Análise e Desenvolvimento de Sistemas do IFSP – Câmpus Jacareí.
 
 ---
 
-## 🧠 Tecnologias utilizadas
+# 🚀 Funcionalidades
 
-* Python
-* Flask
-* EasyOCR
-* Tesseract OCR
-* OpenCV
-* GroqCloud (API compatível com OpenAI)
-* Transformers (TrOCR)
-
----
-
-## 📊 Comparação de desempenho
-
-| Ferramenta | Tipo de Texto | Precisão | Observações                  |
-| ---------- | ------------- | -------- | ---------------------------- |
-| Tesseract  | Digitado      | ~99%     | Excelente para textos limpos |
-| Tesseract  | Manuscrito    | <10%     | Baixo desempenho             |
-| EasyOCR    | Manuscrito    | ~45%     | Perde contexto               |
-| TrOCR      | Manuscrito    | Variável | Melhor em trechos curtos     |
-| Groq VLM   | Digitado      | ~98%     | Muito consistente            |
-| Groq VLM   | Manuscrito    | ~85–90%  | Melhor resultado geral       |
+✅ Upload de imagens de redações  
+✅ OCR tradicional com Tesseract  
+✅ OCR com EasyOCR  
+✅ OCR multimodal com IA (Groq VLM)  
+✅ Comparação entre diferentes métodos  
+✅ Organização automática do texto em linhas  
+✅ Correção manual pós-processamento  
+✅ Salvamento de textos corrigidos  
+✅ Interface web interativa em Flask  
+✅ Sistema de loading/progresso visual  
 
 ---
 
-## ⚙️ Instalação
+# 📸 Interface do Sistema
 
-### 1. Clone o projeto
+## Tela principal
 
-```bash
-git clone https://github.com/seu-usuario/seu-repo.git
-cd seu-repo
+
+```md
+![Interface](assets/interface.png)
+```
+
+## Comparação entre OCRs
+
+
+```md
+![Comparacao](assets/comparacao.png)
 ```
 
 ---
 
-### 2. Crie um ambiente virtual (recomendado)
+# 🧠 Tecnologias Utilizadas
+
+| Tecnologia | Finalidade |
+|---|---|
+| Python | Linguagem principal |
+| Flask | Interface web |
+| Tesseract OCR | OCR tradicional |
+| EasyOCR | OCR baseado em Deep Learning |
+| OpenCV | Pré-processamento de imagens |
+| GroqCloud | IA multimodal |
+| OpenAI SDK | Comunicação com API |
+| Pillow | Manipulação de imagens |
+| Torch | Backend do EasyOCR |
+
+---
+
+# 📊 Comparação de Desempenho
+
+| Ferramenta | Tipo de Texto | Precisão Média | Observações |
+|---|---|---|---|
+| Tesseract | Digitado | ~99% | Excelente para textos limpos |
+| Tesseract | Manuscrito | <10% | Baixo desempenho |
+| EasyOCR | Manuscrito | ~45% | Identifica palavras, mas perde contexto |
+| TrOCR | Manuscrito | Variável | Melhor em pequenos trechos |
+| Groq VLM | Digitado | ~98% | Muito consistente |
+| Groq VLM | Manuscrito | ~85–90% | Melhor resultado geral |
+
+---
+
+# ⚙️ Instalação
+
+## 1️⃣ Clone o projeto
 
 ```bash
-python -m venv venv
-venv\Scripts\activate
+git clone https://github.com/tuh-oliveira/ocr-redacoes-ia.git
+cd ocr-redacoes-ia
 ```
 
 ---
 
-### 3. Instale as dependências
+## 2️⃣ Crie um ambiente virtual
+
+### Python 3.10 (recomendado)
+
+```bash
+py -3.10 -m venv venv
+```
+
+### Ative o ambiente virtual
+
+```powershell
+.\venv\Scripts\Activate.ps1
+```
+
+---
+
+## 3️⃣ Instale as dependências
 
 ```bash
 pip install -r requirements.txt
@@ -73,91 +103,111 @@ pip install -r requirements.txt
 
 ---
 
-### 4. Instale o Tesseract (OBRIGATÓRIO)
+## 4️⃣ Instale o Tesseract OCR
 
-Baixe e instale:
+Baixe:
 
 👉 https://github.com/UB-Mannheim/tesseract/wiki
 
-Adicione ao PATH:
+Adicione ao PATH do Windows:
 
-```
-C:\Program Files\Tesseract-OCR\tesseract.exe
+```txt
+C:\Program Files\Tesseract-OCR\
 ```
 
 ---
 
-### 5. Configure a API da Groq
+## 5️⃣ Configure a API da Groq
 
-Copie o arquivo `.env.example` para `.env` e preencha com sua chave de API:
-
-```bash
-copy .env.example .env
-```
-
-Em `.env`, deixe apenas sua chave:
+Crie um arquivo `.env` na raiz do projeto:
 
 ```env
-GROQ_API_KEY=sua_chave_groq_aqui
+GROQ_API_KEY=sua_chave_aqui
 ```
 
-Obtenha sua chave da API Groq em: https://console.groq.com/
+Obtenha sua chave em:
+
+👉 https://console.groq.com/
 
 ---
 
-## ▶️ Como executar
+# ▶️ Como Executar
 
 ```bash
 python app.py
 ```
 
-Acesse no navegador:
+Abra no navegador:
 
-```
+```txt
 http://127.0.0.1:5000
 ```
 
 ---
 
-## 🧪 Como funciona
+# 🧪 Funcionamento do Sistema
 
-O sistema utiliza um pipeline composto por:
+O pipeline do sistema funciona em etapas:
 
-1. 📍 Detecção de texto (EasyOCR)
-2. 🧩 Agrupamento em linhas
-3. 🔤 OCR tradicional (Tesseract / EasyOCR)
-4. 🤖 OCR com IA (Groq VLM)
-5. 📊 Comparação de resultados
-
----
-
-## ⚠️ Limitações
-
-* OCR manuscrito ainda apresenta erros
-* Dependência de APIs externas (Groq)
-* Instabilidade de modelos multimodais
-* Resultados variam com qualidade da imagem
+1. 📷 Upload da imagem
+2. 🧹 Pré-processamento
+3. 📍 Detecção de texto
+4. 🧩 Agrupamento em linhas
+5. 🔤 OCR tradicional
+6. 🤖 OCR multimodal com IA
+7. 📊 Comparação dos resultados
+8. ✍️ Correção manual opcional
+9. 💾 Salvamento da versão corrigida
 
 ---
 
-## 🔮 Possíveis melhorias
+# ⚠️ Limitações
 
-* Treinamento de modelo próprio
-* Integração com correção automática de redação
-* Avaliação estilo ENEM
-* Melhor segmentação de texto
-* Uso de modelos multimodais mais avançados
+Apesar dos avanços obtidos, o reconhecimento de textos manuscritos ainda apresenta limitações importantes:
 
----
-
-## 👨‍💻 Autor
-
-**Arthur Araújo de Oliveira**
-IFSP – Câmpus Jacareí
-Análise e Desenvolvimento de Sistemas
+- Caligrafias complexas reduzem a precisão
+- Iluminação e qualidade da imagem impactam o OCR
+- APIs multimodais podem apresentar instabilidade
+- Modelos gratuitos possuem limitações e mudanças frequentes
+- OCR manuscrito ainda é um problema aberto na computação
 
 ---
 
-## 📄 Licença
+# 🔮 Melhorias Futuras
 
-Este projeto foi desenvolvido para fins acadêmicos.
+- Fine-tuning com redações brasileiras
+- Avaliação automática estilo ENEM
+- Treinamento de modelo próprio
+- Melhor segmentação de linhas
+- Histórico de correções
+- Exportação em PDF/TXT
+- Dashboard estatístico
+- Comparação automática de similaridade
+
+---
+
+# 📚 Contexto Acadêmico
+
+Este projeto foi desenvolvido como parte de estudos sobre:
+
+- OCR (Optical Character Recognition)
+- Visão Computacional
+- Inteligência Artificial
+- Modelos Multimodais
+- Processamento de Imagens
+- Deep Learning aplicado à linguagem
+
+---
+
+# 👨‍💻 Autor
+
+### Arthur Araújo de Oliveira
+
+📍 IFSP – Câmpus Jacareí  
+🎓 Análise e Desenvolvimento de Sistemas  
+
+---
+
+# 📄 Licença
+
+Projeto desenvolvido para fins acadêmicos e educacionais.
