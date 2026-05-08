@@ -26,16 +26,16 @@ O projeto foi desenvolvido como pesquisa acadêmica no curso de Análise e Desen
 ## Tela principal
 
 
-```md
+
 ![Interface](assets/interface.png)
-```
+
 
 ## Comparação entre OCRs
 
 
-```md
+
 ![Comparacao](assets/comparacao.png)
-```
+
 
 ---
 
