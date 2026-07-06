@@ -39,7 +39,7 @@ class GroqVLMOCR:
                             {
                                 "role": "user",
                                 "content": [
-                                    {"type": "input_text", "text": "Just extract all the text from the image, and give me the extracted text only as a reply."},
+                                    {"type": "input_text", "text": "Extraia TODO o texto da imagem EXATAMENTE como aparece. Mantenha: pontuação, espaçamento, parágrafos, erros de digitação, acentos. Retorne APENAS o texto extraído, sem comentários, sem correções, sem formatação adicional."},
                                     {
                                         "type": "input_image",
                                         "image_url": f"data:image/png;base64,{image_base64}"
@@ -49,8 +49,18 @@ class GroqVLMOCR:
                         ],
                     )
 
-                    if hasattr(response, "output_text") and response.output_text:
-                        return response.output_text
+                    # Fallback para diferentes formatos de resposta
+                    try:
+                        if hasattr(response, "output_text") and response.output_text:
+                            return response.output_text
+                    except:
+                        pass
+
+                    try:
+                        if hasattr(response, "choices") and response.choices:
+                            return response.choices[0].message.content
+                    except:
+                        pass
 
                     return "Sem texto retornado."
 

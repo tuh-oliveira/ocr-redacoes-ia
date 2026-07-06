@@ -12,6 +12,7 @@ app.secret_key = "ocr_redacoes_secret"
 
 UPLOAD_FOLDER = "uploads"
 OUTPUT_FOLDER = "outputs"
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 app.config["OUTPUT_FOLDER"] = OUTPUT_FOLDER
@@ -20,6 +21,11 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 
 groq_ocr = GroqVLMOCR()
+
+
+def allowed_file(filename):
+    """Valida se o arquivo possui uma extensão permitida"""
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -58,7 +64,28 @@ def index():
             except Exception as e:
                 flash(f"❌ Erro ao salvar: {str(e)}", "error")
 
+        if not file or file.filename == '':
+            flash("❌ Selecione uma imagem para processar.", "error")
+            return render_template(
+                "index.html",
+                easy=[],
+                tess=[],
+                groq=[],
+                texto_editado=""
+            )
+
         if file:
+            # Validar extensão do arquivo
+            if not allowed_file(file.filename):
+                flash("❌ Formato de imagem inválido. Utilize PNG, JPG ou JPEG.", "error")
+                return render_template(
+                    "index.html",
+                    easy=[],
+                    tess=[],
+                    groq=[],
+                    texto_editado=""
+                )
+            
             path = os.path.join(app.config["UPLOAD_FOLDER"], file.filename)
             file.save(path)
 

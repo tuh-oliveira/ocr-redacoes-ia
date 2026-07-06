@@ -21,3 +21,7 @@ torchvision
 
 # opcional
 scikit-image
+
+# TrOCR (reconhecimento de texto manuscrito)
+transformers
+sentencepiece
