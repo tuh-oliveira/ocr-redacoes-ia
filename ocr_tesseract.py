@@ -1,8 +1,15 @@
+import sys
+import pkgutil
+# Workaround para Python 3.14 onde pkgutil.find_loader foi removido, quebrando o pytesseract
+if not hasattr(pkgutil, 'find_loader'):
+    import importlib.util
+    pkgutil.find_loader = importlib.util.find_spec
+
 import pytesseract
 import cv2
 
 # AJUSTA ESSE CAMINHO SE PRECISAR
-pytesseract.pytesseract.tesseract_cmd = r"C:\Users\Aluno\AppData\Local\Programs\Tesseract-OCR\tesseract.exe"
+pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
 def process_image_tesseract(path):
     try:
